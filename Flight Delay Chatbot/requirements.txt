@@ -1,8 +1,10 @@
-openai
-google-generativeai
 uvicorn
 fastapi
+requests
+openai
+google-generativeai
 pandas
 python-dateutil
-requests
 pydantic
+pyarrow
+

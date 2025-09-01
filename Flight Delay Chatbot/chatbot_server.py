@@ -1,4 +1,16 @@
 import os
+import os
+import requests
+
+DB_URL = os.environ.get("DB_URL")
+DB_PATH = "flights.db"
+
+if DB_URL and not os.path.exists(DB_PATH):
+    print("Downloading flights.db from", DB_URL)
+    resp = requests.get(DB_URL)
+    with open(DB_PATH, "wb") as f:
+        f.write(resp.content)
+
 from openai import OpenAI
 import google.generativeai as genai
 

@@ -1,0 +1,8 @@
+openai
+google-generativeai
+uvicorn
+fastapi
+pandas
+python-dateutil
+requests
+pydantic

@@ -1,0 +1,671 @@
+{
+  "airports": [
+    {
+      "code": "JFK",
+      "name": "John F. Kennedy International",
+      "city": "New York",
+      "country": "USA"
+    },
+    {
+      "code": "LAX",
+      "name": "Los Angeles International",
+      "city": "Los Angeles",
+      "country": "USA"
+    },
+    {
+      "code": "LHR",
+      "name": "Heathrow",
+      "city": "London",
+      "country": "UK"
+    },
+    {
+      "code": "DXB",
+      "name": "Dubai International",
+      "city": "Dubai",
+      "country": "UAE"
+    },
+    {
+      "code": "SIN",
+      "name": "Singapore Changi",
+      "city": "Singapore",
+      "country": "Singapore"
+    },
+    {
+      "code": "DEL",
+      "name": "Indira Gandhi International",
+      "city": "Delhi",
+      "country": "India"
+    },
+    {
+      "code": "BOM",
+      "name": "Chhatrapati Shivaji International",
+      "city": "Mumbai",
+      "country": "India"
+    },
+    {
+      "code": "CDG",
+      "name": "Charles de Gaulle",
+      "city": "Paris",
+      "country": "France"
+    },
+    {
+      "code": "NRT",
+      "name": "Narita International",
+      "city": "Tokyo",
+      "country": "Japan"
+    },
+    {
+      "code": "SYD",
+      "name": "Sydney Kingsford Smith",
+      "city": "Sydney",
+      "country": "Australia"
+    }
+  ],
+  "airlines": [
+    {
+      "code": "AI",
+      "name": "Air India",
+      "country": "India"
+    },
+    {
+      "code": "6E",
+      "name": "IndiGo",
+      "country": "India"
+    },
+    {
+      "code": "SG",
+      "name": "SpiceJet",
+      "country": "India"
+    },
+    {
+      "code": "UK",
+      "name": "Vistara",
+      "country": "India"
+    },
+    {
+      "code": "AA",
+      "name": "American Airlines",
+      "country": "USA"
+    },
+    {
+      "code": "DL",
+      "name": "Delta Air Lines",
+      "country": "USA"
+    },
+    {
+      "code": "UA",
+      "name": "United Airlines",
+      "country": "USA"
+    },
+    {
+      "code": "BA",
+      "name": "British Airways",
+      "country": "UK"
+    },
+    {
+      "code": "EK",
+      "name": "Emirates",
+      "country": "UAE"
+    },
+    {
+      "code": "SQ",
+      "name": "Singapore Airlines",
+      "country": "Singapore"
+    }
+  ],
+  "delay_factors": [
+    {
+      "factor": "Weather",
+      "impact_score": 8.5,
+      "description": "Adverse weather conditions including storms, fog, snow"
+    },
+    {
+      "factor": "Air Traffic",
+      "impact_score": 7.2,
+      "description": "Congestion in airspace and airport capacity"
+    },
+    {
+      "factor": "Technical Issues",
+      "impact_score": 6.8,
+      "description": "Aircraft maintenance and technical problems"
+    },
+    {
+      "factor": "Crew Issues",
+      "impact_score": 5.5,
+      "description": "Crew scheduling and availability problems"
+    },
+    {
+      "factor": "Security",
+      "impact_score": 4.2,
+      "description": "Security checks and related delays"
+    },
+    {
+      "factor": "Passenger Issues",
+      "impact_score": 3.8,
+      "description": "Late passenger boarding and baggage issues"
+    },
+    {
+      "factor": "Fuel",
+      "impact_score": 3.5,
+      "description": "Fuel-related delays and shortages"
+    },
+    {
+      "factor": "Ground Operations",
+      "impact_score": 6.0,
+      "description": "Airport ground handling delays"
+    }
+  ],
+  "routes_performance": [
+    {
+      "route_id": "R001",
+      "origin": "SYD",
+      "destination": "CDG",
+      "route_name": "Sydney to Paris",
+      "avg_delay_minutes": 23,
+      "on_time_percentage": 77,
+      "cancellation_rate": 2.584204376824165,
+      "total_flights": 405,
+      "airline_code": "DL"
+    },
+    {
+      "route_id": "R002",
+      "origin": "LAX",
+      "destination": "LHR",
+      "route_name": "Los Angeles to London",
+      "avg_delay_minutes": 43,
+      "on_time_percentage": 91,
+      "cancellation_rate": 2.465418189681656,
+      "total_flights": 411,
+      "airline_code": "6E"
+    },
+    {
+      "route_id": "R003",
+      "origin": "JFK",
+      "destination": "SYD",
+      "route_name": "New York to Sydney",
+      "avg_delay_minutes": 74,
+      "on_time_percentage": 75,
+      "cancellation_rate": 4.830381801178652,
+      "total_flights": 83,
+      "airline_code": "6E"
+    },
+    {
+      "route_id": "R004",
+      "origin": "DEL",
+      "destination": "JFK",
+      "route_name": "Delhi to New York",
+      "avg_delay_minutes": 43,
+      "on_time_percentage": 77,
+      "cancellation_rate": 2.3135729433593335,
+      "total_flights": 98,
+      "airline_code": "SQ"
+    },
+    {
+      "route_id": "R005",
+      "origin": "SYD",
+      "destination": "BOM",
+      "route_name": "Sydney to Mumbai",
+      "avg_delay_minutes": 118,
+      "on_time_percentage": 74,
+      "cancellation_rate": 4.336579849067182,
+      "total_flights": 377,
+      "airline_code": "6E"
+    },
+    {
+      "route_id": "R006",
+      "origin": "BOM",
+      "destination": "CDG",
+      "route_name": "Mumbai to Paris",
+      "avg_delay_minutes": 73,
+      "on_time_percentage": 83,
+      "cancellation_rate": 2.7645800645512626,
+      "total_flights": 303,
+      "airline_code": "DL"
+    },
+    {
+      "route_id": "R007",
+      "origin": "JFK",
+      "destination": "SYD",
+      "route_name": "New York to Sydney",
+      "avg_delay_minutes": 31,
+      "on_time_percentage": 93,
+      "cancellation_rate": 2.435576801505422,
+      "total_flights": 172,
+      "airline_code": "6E"
+    },
+    {
+      "route_id": "R008",
+      "origin": "LHR",
+      "destination": "CDG",
+      "route_name": "London to Paris",
+      "avg_delay_minutes": 66,
+      "on_time_percentage": 90,
+      "cancellation_rate": 3.4174785573570508,
+      "total_flights": 458,
+      "airline_code": "DL"
+    },
+    {
+      "route_id": "R009",
+      "origin": "JFK",
+      "destination": "DEL",
+      "route_name": "New York to Delhi",
+      "avg_delay_minutes": 116,
+      "on_time_percentage": 84,
+      "cancellation_rate": 1.8402479017617221,
+      "total_flights": 119,
+      "airline_code": "UK"
+    },
+    {
+      "route_id": "R010",
+      "origin": "JFK",
+      "destination": "LHR",
+      "route_name": "New York to London",
+      "avg_delay_minutes": 114,
+      "on_time_percentage": 90,
+      "cancellation_rate": 4.321944346110229,
+      "total_flights": 147,
+      "airline_code": "DL"
+    },
+    {
+      "route_id": "R011",
+      "origin": "SYD",
+      "destination": "NRT",
+      "route_name": "Sydney to Tokyo",
+      "avg_delay_minutes": 23,
+      "on_time_percentage": 95,
+      "cancellation_rate": 0.5224958816442926,
+      "total_flights": 445,
+      "airline_code": "UK"
+    },
+    {
+      "route_id": "R012",
+      "origin": "CDG",
+      "destination": "SIN",
+      "route_name": "Paris to Singapore",
+      "avg_delay_minutes": 69,
+      "on_time_percentage": 78,
+      "cancellation_rate": 1.850415242111237,
+      "total_flights": 271,
+      "airline_code": "EK"
+    },
+    {
+      "route_id": "R013",
+      "origin": "SYD",
+      "destination": "DXB",
+      "route_name": "Sydney to Dubai",
+      "avg_delay_minutes": 69,
+      "on_time_percentage": 83,
+      "cancellation_rate": 1.4515504569722153,
+      "total_flights": 189,
+      "airline_code": "AI"
+    },
+    {
+      "route_id": "R014",
+      "origin": "SIN",
+      "destination": "BOM",
+      "route_name": "Singapore to Mumbai",
+      "avg_delay_minutes": 41,
+      "on_time_percentage": 81,
+      "cancellation_rate": 2.6001788750087202,
+      "total_flights": 313,
+      "airline_code": "BA"
+    },
+    {
+      "route_id": "R015",
+      "origin": "CDG",
+      "destination": "DXB",
+      "route_name": "Paris to Dubai",
+      "avg_delay_minutes": 32,
+      "on_time_percentage": 70,
+      "cancellation_rate": 3.9908578534153065,
+      "total_flights": 479,
+      "airline_code": "UA"
+    },
+    {
+      "route_id": "R016",
+      "origin": "SIN",
+      "destination": "DEL",
+      "route_name": "Singapore to Delhi",
+      "avg_delay_minutes": 28,
+      "on_time_percentage": 79,
+      "cancellation_rate": 1.3858384588831059,
+      "total_flights": 101,
+      "airline_code": "SG"
+    },
+    {
+      "route_id": "R017",
+      "origin": "SYD",
+      "destination": "CDG",
+      "route_name": "Sydney to Paris",
+      "avg_delay_minutes": 55,
+      "on_time_percentage": 82,
+      "cancellation_rate": 3.2626102862064443,
+      "total_flights": 171,
+      "airline_code": "DL"
+    },
+    {
+      "route_id": "R018",
+      "origin": "SYD",
+      "destination": "JFK",
+      "route_name": "Sydney to New York",
+      "avg_delay_minutes": 27,
+      "on_time_percentage": 69,
+      "cancellation_rate": 0.6600139631748694,
+      "total_flights": 121,
+      "airline_code": "UA"
+    },
+    {
+      "route_id": "R019",
+      "origin": "BOM",
+      "destination": "DXB",
+      "route_name": "Mumbai to Dubai",
+      "avg_delay_minutes": 43,
+      "on_time_percentage": 90,
+      "cancellation_rate": 0.5720294071762232,
+      "total_flights": 350,
+      "airline_code": "UK"
+    },
+    {
+      "route_id": "R020",
+      "origin": "SIN",
+      "destination": "DEL",
+      "route_name": "Singapore to Delhi",
+      "avg_delay_minutes": 80,
+      "on_time_percentage": 76,
+      "cancellation_rate": 1.2620265370900798,
+      "total_flights": 471,
+      "airline_code": "6E"
+    }
+  ],
+  "airline_metrics": [
+    {
+      "airline_code": "AI",
+      "airline_name": "Air India",
+      "on_time_performance": 70.56606583033259,
+      "avg_delay_minutes": 18,
+      "cancellation_rate": 3.6332012526434636,
+      "total_flights_month": 7731,
+      "customer_satisfaction": 4.336698907905717,
+      "model_accuracy": 94.10175905340445
+    },
+    {
+      "airline_code": "6E",
+      "airline_name": "IndiGo",
+      "on_time_performance": 89.1054539652543,
+      "avg_delay_minutes": 44,
+      "cancellation_rate": 2.5287998928062585,
+      "total_flights_month": 2644,
+      "customer_satisfaction": 4.225913841206338,
+      "model_accuracy": 86.72899192598666
+    },
+    {
+      "airline_code": "SG",
+      "airline_name": "SpiceJet",
+      "on_time_performance": 77.72919235228389,
+      "avg_delay_minutes": 43,
+      "cancellation_rate": 3.3803747343150397,
+      "total_flights_month": 8470,
+      "customer_satisfaction": 4.297209744031856,
+      "model_accuracy": 94.74649813193861
+    },
+    {
+      "airline_code": "UK",
+      "airline_name": "Vistara",
+      "on_time_performance": 73.68751586552666,
+      "avg_delay_minutes": 36,
+      "cancellation_rate": 3.8927819947094884,
+      "total_flights_month": 3137,
+      "customer_satisfaction": 4.037292852148971,
+      "model_accuracy": 86.90814726005578
+    },
+    {
+      "airline_code": "AA",
+      "airline_name": "American Airlines",
+      "on_time_performance": 87.89238874801349,
+      "avg_delay_minutes": 17,
+      "cancellation_rate": 3.9710088200671265,
+      "total_flights_month": 7501,
+      "customer_satisfaction": 4.376425990300874,
+      "model_accuracy": 91.94183595288773
+    },
+    {
+      "airline_code": "DL",
+      "airline_name": "Delta Air Lines",
+      "on_time_performance": 85.33109325117633,
+      "avg_delay_minutes": 31,
+      "cancellation_rate": 1.7753341514496142,
+      "total_flights_month": 5891,
+      "customer_satisfaction": 4.025279047088507,
+      "model_accuracy": 93.21249671451378
+    },
+    {
+      "airline_code": "UA",
+      "airline_name": "United Airlines",
+      "on_time_performance": 83.41989262550362,
+      "avg_delay_minutes": 24,
+      "cancellation_rate": 2.312771216864229,
+      "total_flights_month": 5739,
+      "customer_satisfaction": 4.5790707531736095,
+      "model_accuracy": 92.74263339689416
+    },
+    {
+      "airline_code": "BA",
+      "airline_name": "British Airways",
+      "on_time_performance": 92.36896648103445,
+      "avg_delay_minutes": 19,
+      "cancellation_rate": 3.328914132802245,
+      "total_flights_month": 5062,
+      "customer_satisfaction": 3.9858360629958964,
+      "model_accuracy": 85.1106276368449
+    },
+    {
+      "airline_code": "EK",
+      "airline_name": "Emirates",
+      "on_time_performance": 86.3922481652765,
+      "avg_delay_minutes": 31,
+      "cancellation_rate": 2.8060271102153127,
+      "total_flights_month": 6760,
+      "customer_satisfaction": 3.86160187420198,
+      "model_accuracy": 93.5024104002527
+    },
+    {
+      "airline_code": "SQ",
+      "airline_name": "Singapore Airlines",
+      "on_time_performance": 80.30324654335053,
+      "avg_delay_minutes": 40,
+      "cancellation_rate": 3.6626484388961122,
+      "total_flights_month": 4263,
+      "customer_satisfaction": 4.075640969135126,
+      "model_accuracy": 85.63043484852614
+    }
+  ],
+  "time_slot_performance": [
+    {
+      "hour": 0,
+      "time_period": "00:00-01:00",
+      "avg_delay_minutes": 47,
+      "flight_count": 138,
+      "delay_probability": 0.3724827852688605
+    },
+    {
+      "hour": 1,
+      "time_period": "01:00-02:00",
+      "avg_delay_minutes": 58,
+      "flight_count": 128,
+      "delay_probability": 0.4144659334018649
+    },
+    {
+      "hour": 2,
+      "time_period": "02:00-03:00",
+      "avg_delay_minutes": 18,
+      "flight_count": 41,
+      "delay_probability": 0.15884132098428036
+    },
+    {
+      "hour": 3,
+      "time_period": "03:00-04:00",
+      "avg_delay_minutes": 43,
+      "flight_count": 65,
+      "delay_probability": 0.2648093834626368
+    },
+    {
+      "hour": 4,
+      "time_period": "04:00-05:00",
+      "avg_delay_minutes": 51,
+      "flight_count": 35,
+      "delay_probability": 0.38315653932523064
+    },
+    {
+      "hour": 5,
+      "time_period": "05:00-06:00",
+      "avg_delay_minutes": 49,
+      "flight_count": 140,
+      "delay_probability": 0.1559206751633854
+    },
+    {
+      "hour": 6,
+      "time_period": "06:00-07:00",
+      "avg_delay_minutes": 56,
+      "flight_count": 69,
+      "delay_probability": 0.31016199670926503
+    },
+    {
+      "hour": 7,
+      "time_period": "07:00-08:00",
+      "avg_delay_minutes": 41,
+      "flight_count": 24,
+      "delay_probability": 0.2669759213555519
+    },
+    {
+      "hour": 8,
+      "time_period": "08:00-09:00",
+      "avg_delay_minutes": 38,
+      "flight_count": 102,
+      "delay_probability": 0.16556540982884668
+    },
+    {
+      "hour": 9,
+      "time_period": "09:00-10:00",
+      "avg_delay_minutes": 17,
+      "flight_count": 190,
+      "delay_probability": 0.1659331492726578
+    },
+    {
+      "hour": 10,
+      "time_period": "10:00-11:00",
+      "avg_delay_minutes": 19,
+      "flight_count": 88,
+      "delay_probability": 0.312079065896673
+    },
+    {
+      "hour": 11,
+      "time_period": "11:00-12:00",
+      "avg_delay_minutes": 57,
+      "flight_count": 26,
+      "delay_probability": 0.2760440466191213
+    },
+    {
+      "hour": 12,
+      "time_period": "12:00-13:00",
+      "avg_delay_minutes": 23,
+      "flight_count": 44,
+      "delay_probability": 0.21422782300374413
+    },
+    {
+      "hour": 13,
+      "time_period": "13:00-14:00",
+      "avg_delay_minutes": 50,
+      "flight_count": 80,
+      "delay_probability": 0.23286239941309633
+    },
+    {
+      "hour": 14,
+      "time_period": "14:00-15:00",
+      "avg_delay_minutes": 53,
+      "flight_count": 87,
+      "delay_probability": 0.40725731379956054
+    },
+    {
+      "hour": 15,
+      "time_period": "15:00-16:00",
+      "avg_delay_minutes": 33,
+      "flight_count": 38,
+      "delay_probability": 0.2109856829070758
+    },
+    {
+      "hour": 16,
+      "time_period": "16:00-17:00",
+      "avg_delay_minutes": 52,
+      "flight_count": 101,
+      "delay_probability": 0.4233210796176464
+    },
+    {
+      "hour": 17,
+      "time_period": "17:00-18:00",
+      "avg_delay_minutes": 57,
+      "flight_count": 197,
+      "delay_probability": 0.27710154611321175
+    },
+    {
+      "hour": 18,
+      "time_period": "18:00-19:00",
+      "avg_delay_minutes": 45,
+      "flight_count": 107,
+      "delay_probability": 0.3531831485063881
+    },
+    {
+      "hour": 19,
+      "time_period": "19:00-20:00",
+      "avg_delay_minutes": 27,
+      "flight_count": 60,
+      "delay_probability": 0.3963419404763958
+    },
+    {
+      "hour": 20,
+      "time_period": "20:00-21:00",
+      "avg_delay_minutes": 36,
+      "flight_count": 123,
+      "delay_probability": 0.44954338801529337
+    },
+    {
+      "hour": 21,
+      "time_period": "21:00-22:00",
+      "avg_delay_minutes": 30,
+      "flight_count": 44,
+      "delay_probability": 0.30190716987540844
+    },
+    {
+      "hour": 22,
+      "time_period": "22:00-23:00",
+      "avg_delay_minutes": 31,
+      "flight_count": 151,
+      "delay_probability": 0.30385513337127756
+    },
+    {
+      "hour": 23,
+      "time_period": "23:00-24:00",
+      "avg_delay_minutes": 24,
+      "flight_count": 40,
+      "delay_probability": 0.29898967611915883
+    }
+  ],
+  "api_endpoints": {
+    "user_facing": {
+      "predict_delay": "/api/predict-delay",
+      "alternate_flights": "/api/alternate-flights",
+      "book_cab": "/api/book-cab"
+    },
+    "admin_monitoring": {
+      "model_metrics": "/api/admin/model-metrics",
+      "retrain_model": "/api/admin/retrain-model"
+    },
+    "airline_facing": {
+      "delay_stats": "/api/airline/delay-stats",
+      "route_performance": "/api/airline/route-performance",
+      "time_slot_performance": "/api/airline/time-slot-performance",
+      "loss_due_to_delay": "/api/airline/loss-due-to-delay",
+      "model_metrics": "/api/airline/model-metrics",
+      "operational_alerts": "/api/airline/operational-alerts"
+    }
+  }
+}

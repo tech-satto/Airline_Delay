@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FlightPredict - Intelligent Delay Prediction System</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" data-portal="landing" style="cursor: pointer;">
+                    <i data-lucide="plane" class="logo-icon"></i>
+                    <span>FlightPredict</span>
+                </div>
+                <nav class="nav" id="mainNav">
+                    <button class="nav-btn" data-portal="landing">Home</button>
+                    <button class="nav-btn" data-portal="user">Traveler</button>
+                    <button class="nav-btn" data-portal="airline">Airline</button>
+                    <!-- Admin button removed from navigation -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Developer Tools Icon -->
+    <div class="admin-icon" id="adminIcon" title="Developer Tools" style="position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 1000;">
+        <i data-lucide="help-circle" style="color: var(--neon-blue);"></i>
+    </div>
+
+    <!-- Landing Portal -->
+    <section id="landing" class="portal active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Intelligent Flight Delay Prediction</h1>
+                    <p class="hero-subtitle">
+                        Advanced ML-powered system for predicting flight delays, optimizing operations, and enhancing passenger experience.
+                    </p>
+
+                    <div class="portal-cards">
+                        <div class="portal-card" data-portal="user">
+                            <div class="portal-icon">
+                                <i data-lucide="user" class="icon"></i>
+                            </div>
+                            <h3>Traveler Portal</h3>
+                            <p>Get real-time delay predictions, alternative flights, and smart rebooking options with intuitive neon-powered interface</p>
+                            <button class="btn btn--primary" data-portal="user">Enter Portal</button>
+                        </div>
+
+                        <div class="portal-card" data-portal="airline">
+                            <div class="portal-icon">
+                                <i data-lucide="building" class="icon"></i>
+                            </div>
+                            <h3>Airline Portal</h3>
+                            <p>Monitor performance, analyze routes, and receive operational alerts through stunning data visualizations</p>
+                            <button class="btn btn--primary" data-portal="airline">Enter Portal</button>
+                        </div>
+
+                        <!-- Admin card removed from landing page -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Portal -->
+    <section id="user" class="portal">
+        <div class="container">
+            <div class="portal-header">
+                <h1>Traveler Dashboard</h1>
+                <p>Smart flight predictions and travel optimization</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Flight Search Card -->
+                <div class="card flight-search-card">
+                    <div class="card-header">
+                        <h3>Flight Delay Prediction</h3>
+                        <i data-lucide="search" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <form id="flightSearchForm" class="flight-search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="originSelect">From</label>
+                                    <select class="form-control" id="originSelect" required>
+                                        <option value="">Select Origin</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="destinationSelect">To</label>
+                                    <select class="form-control" id="destinationSelect" required>
+                                        <option value="">Select Destination</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="userAirlineSelect">Airline</label>
+                                    <select class="form-control" id="userAirlineSelect" required>
+                                        <option value="">Select Airline</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="flightDate">Date</label>
+                                    <input type="date" class="form-control" id="flightDate" required />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="flightTime">Departure Time</label>
+                                    <input type="time" class="form-control" id="flightTime" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="desiredArrival">Desired Arrival</label>
+                                    <input type="time" class="form-control" id="desiredArrival" value="18:00" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary btn--full-width">
+                                <i data-lucide="zap" class="icon"></i>
+                                Predict Delay
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="card prediction-card hidden" id="predictionResults">
+                    <div class="card-header">
+                        <h3>Delay Prediction</h3>
+                        <i data-lucide="clock" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="prediction-display">
+                            <div class="prediction-metric">
+                                <span class="metric-label">Prediction Status</span>
+                                <span class="metric-value" id="predictionText">--</span>
+                            </div>
+                            <div class="prediction-metric">
+                                <span class="metric-label">Confidence Score</span>
+                                <span class="metric-value" id="confidenceScore">--</span>
+                            </div>
+                            <div class="prediction-metric">
+                                <span class="metric-label">Delay Probability</span>
+                                <span class="metric-value" id="delayProbability">--</span>
+                            </div>
+                            <div class="prediction-metric">
+                                <span class="metric-label">Expected Delay</span>
+                                <span class="metric-value" id="expectedDelay">--</span>
+                            </div>
+                            <div class="prediction-status" id="predictionStatus">
+                                <span class="status status--info">Analyzing...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alternative Flights -->
+                <div class="card alternatives-card hidden" id="alternativesCard">
+                    <div class="card-header">
+                        <h3>Alternative Flights</h3>
+                        <i data-lucide="shuffle" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div id="alternativesList" class="alternatives-list"></div>
+                    </div>
+                </div>
+
+                <!-- Cab Booking -->
+                <div class="card cab-card hidden" id="cabCard">
+                    <div class="card-header">
+                        <h3>Smart Cab Booking</h3>
+                        <i data-lucide="car" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="cab-options">
+                            <div class="cab-option" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Current Booking: 2:30 PM</span>
+                                <button class="btn btn--secondary btn--sm" id="rescheduleBtn">
+                                    <i data-lucide="calendar-check" class="icon"></i>
+                                    Auto-Reschedule
+                                </button>
+                            </div>
+                            <div class="cab-status" id="cabStatus" style="margin-top: 12px;">
+                                <span class="status status--success">Ready to reschedule based on delay</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Route Statistics Card -->
+                <div class="card route-stats-card hidden" id="routeStatsCard">
+                    <div class="card-header">
+                        <h3>Route Statistics</h3>
+                        <i data-lucide="map" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="route-metrics">
+                            <div class="metric-card">
+                                <span class="metric-label">Airlines on Route</span>
+                                <span class="metric-value" id="routeAirlines">--</span>
+                                <div class="airline-list" id="airlineList" style="margin-top: 8px; font-size: 12px; color: #cccccc;"></div>
+                            </div>
+                            <div class="metric-card">
+                                <span class="metric-label">Total Flights</span>
+                                <span class="metric-value" id="totalFlights">--</span>
+                            </div>
+                            <div class="metric-card">
+                                <span class="metric-label">Selected Airline Flights</span>
+                                <span class="metric-value" id="selectedAirlineFlights">--</span>
+                            </div>
+                        </div>
+                        <div class="delay-distribution" style="margin-top: 20px;">
+                            <h4 style="color: #ffffff; margin-bottom: 10px;">Delay Distribution</h4>
+                            <div class="distribution-bar" style="display: flex; height: 30px; border-radius: 15px; overflow: hidden; background: rgba(0, 0, 0, 0.3);">
+                                <div class="on-time-bar" id="onTimeBar" style="background: linear-gradient(90deg, var(--neon-green), #00cc6a); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;"></div>
+                                <div class="delayed-bar" id="delayedBar" style="background: linear-gradient(90deg, var(--neon-pink), #cc0052); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /.dashboard-grid -->
+        </div> <!-- /.container -->
+    </section>
+
+    <!-- Airline Portal -->
+    <section id="airline" class="portal">
+    <div class="container">
+        <div class="portal-header">
+            <h1>Airline Operations Dashboard</h1>
+            <p>Real-time performance monitoring and analytics</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card performance-overview">
+                <div class="card-header">
+                    <h3>Performance Overview</h3>
+                    <select class="form-control airline-selector" id="airlineSelect">
+                        <option value="">Select Airline</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div class="metrics-grid" id="airlineMetrics">
+                        <div class="metric-card">
+                            <span class="metric-label">On-Time Performance</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Avg Arrival Delay</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Avg Departure Delay</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Monthly Flights</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h3>Delay Cause & Ranking</h3>
+                    <i data-lucide="pie-chart" class="icon"></i>
+                </div>
+                <div class="card-body" id="delayAnalysisBody">
+                    <div class="chart-container" style="position: relative; height: 220px; margin-bottom: 20px;">
+                        <canvas id="delayCauseChart"></canvas>
+                    </div>
+                    <div class="financial-metrics" id="rankingMetrics">
+                        <div class="financial-metric">
+                            <span class="metric-label">Rank by Arrival Delay</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="financial-metric">
+                            <span class="metric-label">Rank by Departure Delay</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+            <div class="card-header">
+                <h3>Route Delay Distribution</h3>
+                <i data-lucide="list-numbers" class="icon"></i>
+            </div>
+            <div class="card-body">
+                <div class="route-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="routeOriginSelect">From</label>
+                            <select class="form-control" id="routeOriginSelect" required>
+                                <option value="">Select Origin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="routeDestinationSelect">To</label>
+                            <select class="form-control" id="routeDestinationSelect" required>
+                                <option value="">Select Destination</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary" id="routeSearchBtn">Analyze Route</button>
+                </div>
+
+                <div class="metrics-grid" id="routeDistributionContainer" style="margin-top: 20px; grid-template-columns: repeat(3, 1fr);">
+                    <div class="metric-card">
+                        <span class="metric-label">0-15 min</span>
+                        <span class="metric-value">--</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">15-60 min</span>
+                        <span class="metric-value">--</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">60+ min</span>
+                        <span class="metric-value">--</span>
+                    </div>
+                </div>
+
+                <div class="financial-metrics" id="routeTotalsContainer" style="margin-top: 15px;">
+                    <div class="financial-metric">
+                        <span class="metric-label">Total Flights (This Airline)</span>
+                        <span class="metric-value" id="routeTotalAirlineFlights">--</span>
+                    </div>
+                    <div class="financial-metric">
+                        <span class="metric-label">Airlines on Route</span>
+                        <span class="metric-value" id="routeNumAirlines">--</span>
+                    </div>
+                    <div class="financial-metric">
+                        <span class="metric-label">Avg Arrival Delay</span>
+                        <span class="metric-value" id="routeAvgArrivalDelay">--</span>
+                    </div>
+                    <div class="financial-metric">
+                        <span class="metric-label">Avg Departure Delay</span>
+                        <span class="metric-value" id="routeAvgDepDelay">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="card alerts-card">
+                <div class="card-header">
+                    <h3>Operational Alerts</h3>
+                    <i data-lucide="alert-triangle" class="icon"></i>
+                </div>
+                <div class="card-body">
+                    <div class="alerts-list" id="alertsList">
+                        <div class="alert alert--warning">
+                            <i data-lucide="alert-circle" class="alert-icon"></i>
+                            <div class="alert-content">
+                                <span class="alert-title">High Risk Route</span>
+                                <span class="alert-message">LAX-LHR showing 41% delay probability</span>
+                            </div>
+                        </div>
+                        <div class="alert alert--error">
+                            <i data-lucide="x-circle" class="alert-icon"></i>
+                            <div class="alert-content">
+                                <span class="alert-title">Weather Impact</span>
+                                <span class="alert-message">JFK operations affected by storms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Impact Analysis card removed -->
+        </div> </div> </section>
+
+    <!-- Admin Portal -->
+    <section id="admin" class="portal">
+        <div class="container">
+            <div class="portal-header">
+                <h1>System Administration</h1>
+                <p>Model management and system monitoring</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- System Health -->
+                <div class="card system-health-card">
+                    <div class="card-header">
+                        <h3>System Health</h3>
+                        <i data-lucide="activity" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="health-metrics">
+                            <div class="health-metric">
+                                <span class="metric-label">API Uptime</span>
+                                <span class="metric-value health-good">99.8%</span>
+                            </div>
+                            <div class="health-metric">
+                                <span class="metric-label">Prediction Latency</span>
+                                <span class="metric-value health-good">142ms</span>
+                            </div>
+                            <div class="health-metric">
+                                <span class="metric-label">Daily Requests</span>
+                                <span class="metric-value">45,892</span>
+                            </div>
+                            <div class="health-metric">
+                                <span class="metric-label">Error Rate</span>
+                                <span class="metric-value health-good">0.02%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Performance -->
+                <div class="card model-performance-card">
+                    <div class="card-header">
+                        <h3>Model Performance</h3>
+                        <i data-lucide="brain" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="model-metrics">
+                            <div class="model-metric">
+                                <span class="metric-label">Current Version</span>
+                                <span class="metric-value">v2.3.1</span>
+                            </div>
+                            <div class="model-metric">
+                                <span class="metric-label">Global AUC</span>
+                                <span class="metric-value">0.892</span>
+                            </div>
+                            <div class="model-metric">
+                                <span class="metric-label">RMSE</span>
+                                <span class="metric-value">12.4</span>
+                            </div>
+                            <div class="model-metric">
+                                <span class="metric-label">Drift Status</span>
+                                <span class="status status--success">Stable</span>
+                            </div>
+                        </div>
+                        <button class="btn btn--secondary btn--full-width" id="retrainBtn">
+                            <i data-lucide="refresh-cw" class="icon"></i>
+                            Trigger Retraining
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Model Performance Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3>Model Accuracy Trends</h3>
+                        <i data-lucide="trending-up" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="modelChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Analytics -->
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h3>User Analytics</h3>
+                        <i data-lucide="users" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="analytics-grid">
+                            <div class="analytics-metric">
+                                <span class="metric-label">Active Users</span>
+                                <span class="metric-value">2,847</span>
+                            </div>
+                            <div class="analytics-metric">
+                                <span class="metric-label">Airlines Connected</span>
+                                <span class="metric-value">23</span>
+                            </div>
+                            <div class="analytics-metric">
+                                <span class="metric-label">Predictions Today</span>
+                                <span class="metric-value">18,942</span>
+                            </div>
+                            <div class="analytics-metric">
+                                <span class="metric-label">Accuracy Rate</span>
+                                <span class="metric-value health-good">94.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Logs -->
+                <div class="card logs-card">
+                    <div class="card-header">
+                        <h3>Recent System Events</h3>
+                        <i data-lucide="file-text" class="icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="logs-list">
+                            <div class="log-entry">
+                                <span class="log-time">14:25:32</span>
+                                <span class="log-message">Model v2.3.1 deployed successfully</span>
+                                <span class="status status--success">Success</span>
+                            </div>
+                            <div class="log-entry">
+                                <span class="log-time">14:20:15</span>
+                                <span class="log-message">Data pipeline completed</span>
+                                <span class="status status--success">Success</span>
+                            </div>
+                            <div class="log-entry">
+                                <span class="log-time">14:18:07</span>
+                                <span class="log-message">Alert: High API usage detected</span>
+                                <span class="status status--warning">Warning</span>
+                            </div>
+                            <div class="log-entry">
+                                <span class="log-time">14:15:43</span>
+                                <span class="log-message">Scheduled maintenance completed</span>
+                                <span class="status status--success">Success</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /.dashboard-grid -->
+        </div> <!-- /.container -->
+    </section>
+
+    <!-- Loading Modal -->
+    <div class="modal hidden" id="loadingModal">
+        <div class="modal-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing...</h3>
+            <p id="loadingMessage">Analyzing flight data</p>
+        </div>
+    </div>
+    
+    <!-- App script -->
+    <script src="app.js"></script>
+
+    <!-- Chat Floating Button -->
+<div id="chat-toggle" class="chat-toggle">
+  <i data-lucide="message-circle"></i>
+  <span id="chat-badge" class="chat-badge" style="display:none;">1</span>
+</div>
+
+<!-- Large Chatbot Panel -->
+<div id="chat-panel" class="chat-panel hidden">
+  <div class="chat-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="chat-bot-icon">
+        <i data-lucide="bot"></i>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:18px;">AI Travel Assistant</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:14px;">
+          <span class="online-dot"></span>
+          <span style="color:#39ff14;">Online</span>
+        </div>
+      </div>
+    </div>
+    <button id="chat-close" class="chat-close-btn"><i data-lucide="x"></i></button>
+  </div>
+  <div id="chat-messages" class="chat-messages">
+    <!-- Default welcome messages -->
+    <div class="msg-bot">
+      <div class="bot-avatar">
+        <i data-lucide="bot"></i>
+      </div>
+      <div class="msg-content">Hi! I'm your AI travel assistant. Ask me about flight delays, rebooking options, or travel advice.</div>
+      <div class="msg-time">Now</div>
+    </div>
+    <div class="msg-bot">
+      <div class="bot-avatar">
+        <i data-lucide="bot"></i>
+      </div>
+      <div class="msg-content">Hi! I'm your AI travel assistant. Ask me about flight delays, rebooking options, or travel advice.</div>
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+  <div class="chat-action-bar">
+    <button class="chat-action-btn">
+      <i data-lucide="clock"></i>
+      Delay Risk
+    </button>
+    <button class="chat-action-btn">
+      <i data-lucide="shuffle"></i>
+      Alternatives
+    </button>
+    <button class="chat-action-btn">
+      <i data-lucide="help-circle"></i>
+      Help
+    </button>
+  </div>
+  <form id="chat-input-form" class="chat-input-area">
+    <input id="chat-input" type="text" autocomplete="off" placeholder="Ask about flights, delays, or travel..."/>
+    <button type="submit" class="chat-send-btn"><i data-lucide="send"></i></button>
+  </form>
+</div>
+<script>
+lucide?.createIcons();
+const toggleBtn = document.getElementById('chat-toggle');
+const chatPanel = document.getElementById('chat-panel');
+const chatBadge = document.getElementById('chat-badge');
+const closeBtn = document.getElementById('chat-close');
+const inputForm = document.getElementById('chat-input-form');
+const inputEl = document.getElementById('chat-input');
+const messagesEl = document.getElementById('chat-messages');
+
+toggleBtn.onclick = () => {
+  chatPanel.classList.toggle('hidden');
+  if (!chatPanel.classList.contains('hidden')) {
+    chatBadge.style.display = 'none';
+    inputEl.focus();
+  }
+};
+closeBtn.onclick = () => chatPanel.classList.add('hidden');
+
+// Show badge demo
+setTimeout(() => { chatBadge.style.display = 'flex'; }, 3000);
+
+function appendMessage(text, sender) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = sender === 'user' ? 'msg-user' : 'msg-bot';
+  
+  if (sender === 'bot') {
+    messageDiv.innerHTML = `
+      <div class="bot-avatar"><i data-lucide="bot"></i></div>
+      <div>
+        <div class="msg-content">${text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</div>
+        <div class="msg-time">Now</div>
+      </div>
+    `;
+  } else {
+    messageDiv.innerHTML = `
+      <div>
+        <div class="msg-content">${text}</div>
+        <div class="msg-time">Now</div>
+      </div>
+    `;
+  }
+  
+  messagesEl.appendChild(messageDiv);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  lucide?.createIcons();
+}
+
+inputForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const text = inputEl.value.trim();
+  if (!text) return;
+  appendMessage(text, 'user');
+  inputEl.value = '';
+  
+  try {
+    const resp = await fetch('http://127.0.0.1:8020/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: text, context: window.chatContext || {} })
+    });
+    const data = await resp.json();
+    appendMessage(data.reply, 'bot');
+    window.chatContext = data.context;
+  } catch (err) {
+    appendMessage('**⚠️ Unable to connect to chatbot.**', 'bot');
+  }
+};
+</script>
+</body>
+</html>

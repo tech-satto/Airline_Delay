@@ -4,8 +4,9 @@ import joblib
 from xgboost import XGBClassifier
 from .config import DATA_PATH, MODEL_PATH, ENCODER_PATH
 
-# Load dataset
-df = pd.read_csv(DATA_PATH, low_memory=False)
+# Load dataset, but use only 40%
+full_df = pd.read_csv(DATA_PATH, low_memory=False)
+df = full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
 
 # Load XGBoost model
 xgb_model = XGBClassifier()
@@ -14,6 +15,7 @@ xgb_model.load_model(MODEL_PATH)
 # Load LabelEncoders
 le_dict = joblib.load(ENCODER_PATH)
 
+# ... rest of your code unchanged ...
 
 def preprocess_input(flight_date, airline, origin, destination, sched_departure):
     """Return probability of delay for a single flight."""

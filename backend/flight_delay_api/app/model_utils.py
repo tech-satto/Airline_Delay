@@ -5,8 +5,9 @@ from xgboost import XGBClassifier
 from .config import DATA_PATH, MODEL_PATH, ENCODER_PATH
 
 # Load dataset, but use only 40%
-full_df = pd.read_csv(DATA_PATH, low_memory=False)
-df = full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
+def get_sampled_df():
+    full_df = pd.read_csv(DATA_PATH, low_memory=False)
+    return full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
 
 # Load XGBoost model
 xgb_model = XGBClassifier()
@@ -23,6 +24,9 @@ def preprocess_input(flight_date, airline, origin, destination, sched_departure)
     month = date_obj.month
     day = date_obj.day
     day_of_week = date_obj.isoweekday()
+
+    # Load sampled dataframe lazily
+    df = get_sampled_df()
 
     # Distance lookup
     distance = df[(df["ORIGIN_AIRPORT"]==origin) & (df["DESTINATION_AIRPORT"]==destination)]["DISTANCE"].mean()
@@ -49,11 +53,13 @@ def preprocess_input(flight_date, airline, origin, destination, sched_departure)
     prob_delay = xgb_model.predict_proba(input_df)[:,1][0]
     return float(prob_delay)
 
-
 def suggest_alternatives(user_input, top_n=5):
     origin = user_input["origin"]
     dest = user_input["destination"]
     date_str = user_input["date"]
+
+    # Load sampled dataframe lazily
+    df = get_sampled_df()
 
     candidates = df[(df["ORIGIN_AIRPORT"]==origin) & (df["DESTINATION_AIRPORT"]==dest)]
     if len(candidates) > 20:

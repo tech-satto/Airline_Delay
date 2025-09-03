@@ -2,19 +2,9 @@ import pandas as pd
 import datetime
 import joblib
 from xgboost import XGBClassifier
-from fastapi.middleware.cors import CORSMiddleware
 from .config import DATA_PATH, MODEL_PATH, ENCODER_PATH
 
-# Enable CORS for frontend requests
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Load the sampled CSV ONCE at startup (keep all columns, fewer rows)
+# Load sampled CSV ONCE at startup (all columns, sampled rows)
 df = pd.read_csv(DATA_PATH, low_memory=False)
 
 # Load XGBoost model
@@ -33,10 +23,7 @@ def preprocess_input(flight_date, airline, origin, destination, sched_departure)
     day = date_obj.day
     day_of_week = date_obj.isoweekday()
 
-    # Load sampled dataframe lazily
-    df = get_sampled_df()
-
-    # Distance lookup
+    # Use global df, not lazy reloading
     distance = df[(df["ORIGIN_AIRPORT"] == origin) & (df["DESTINATION_AIRPORT"] == destination)]["DISTANCE"].mean()
     distance = int(distance) if not pd.isna(distance) else int(df["DISTANCE"].mean())
 
@@ -66,9 +53,7 @@ def suggest_alternatives(user_input, top_n=5):
     dest = user_input["destination"]
     date_str = user_input["date"]
 
-    # Load sampled dataframe lazily
-    df = get_sampled_df()
-
+    # Use global df, not lazy reloading
     candidates = df[(df["ORIGIN_AIRPORT"] == origin) & (df["DESTINATION_AIRPORT"] == dest)]
     if len(candidates) > 20:
         candidates = candidates.sample(20, random_state=42)

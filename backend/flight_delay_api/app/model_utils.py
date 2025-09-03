@@ -4,9 +4,10 @@ import joblib
 from xgboost import XGBClassifier
 from .config import DATA_PATH, MODEL_PATH, ENCODER_PATH
 
-# Load sampled dataset ONCE at startup (only 40%, all columns)
-full_df = pd.read_csv(DATA_PATH, low_memory=False)
-df = full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
+# Load dataset, but use only 40% (lazy, per-request)
+def get_sampled_df():
+    full_df = pd.read_csv(DATA_PATH, low_memory=False)
+    return full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
 
 # Load XGBoost model
 xgb_model = XGBClassifier()
@@ -24,11 +25,11 @@ def preprocess_input(flight_date, airline, origin, destination, sched_departure)
     day = date_obj.day
     day_of_week = date_obj.isoweekday()
 
-    # Use globally loaded sampled dataframe
-    # df is already loaded and sampled
+    # Load sampled dataframe lazily
+    df = get_sampled_df()
 
     # Distance lookup
-    distance = df[(df["ORIGIN_AIRPORT"]==origin) & (df["DESTINATION_AIRPORT"]==destination)]["DISTANCE"].mean()
+    distance = df[(df["ORIGIN_AIRPORT"] == origin) & (df["DESTINATION_AIRPORT"] == destination)]["DISTANCE"].mean()
     distance = int(distance) if not pd.isna(distance) else int(df["DISTANCE"].mean())
 
     input_df = pd.DataFrame({
@@ -49,7 +50,7 @@ def preprocess_input(flight_date, airline, origin, destination, sched_departure)
         le = le_dict[col]
         input_df[col] = le.transform(input_df[col]) if input_df[col].iloc[0] in le.classes_ else 0
 
-    prob_delay = xgb_model.predict_proba(input_df)[:,1][0]
+    prob_delay = xgb_model.predict_proba(input_df)[:, 1][0]
     return float(prob_delay)
 
 def suggest_alternatives(user_input, top_n=5):
@@ -57,9 +58,10 @@ def suggest_alternatives(user_input, top_n=5):
     dest = user_input["destination"]
     date_str = user_input["date"]
 
-    # Use globally loaded sampled dataframe
+    # Load sampled dataframe lazily
+    df = get_sampled_df()
 
-    candidates = df[(df["ORIGIN_AIRPORT"]==origin) & (df["DESTINATION_AIRPORT"]==dest)]
+    candidates = df[(df["ORIGIN_AIRPORT"] == origin) & (df["DESTINATION_AIRPORT"] == dest)]
     if len(candidates) > 20:
         candidates = candidates.sample(20, random_state=42)
 

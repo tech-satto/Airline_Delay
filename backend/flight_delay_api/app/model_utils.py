@@ -2,12 +2,20 @@ import pandas as pd
 import datetime
 import joblib
 from xgboost import XGBClassifier
+from fastapi.middleware.cors import CORSMiddleware
 from .config import DATA_PATH, MODEL_PATH, ENCODER_PATH
 
-# Load dataset, but use only 40% (lazy, per-request)
-def get_sampled_df():
-    full_df = pd.read_csv(DATA_PATH, low_memory=False)
-    return full_df.sample(frac=0.4, random_state=42).reset_index(drop=True)
+# Enable CORS for frontend requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load the sampled CSV ONCE at startup (keep all columns, fewer rows)
+df = pd.read_csv(DATA_PATH, low_memory=False)
 
 # Load XGBoost model
 xgb_model = XGBClassifier()
